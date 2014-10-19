@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
+		 <link rel="stylesheet" href="style.css" />
+		<script>
+		var myLat;
+		var myLong;
+		var map;
+		var latlng;
+		var meMarker;
+		var url = "http://chickenofthesea.herokuapp.com/sendLocation";
+		var infowindow = new google.maps.InfoWindow;
+		var request = new XMLHttpRequest();
+
+		//creates an initial map
+		function initialize() {
+			myOptions = {
+            	zoom: 14, 
+           	 	center: latlng,
+            	mapTypeId: google.maps.MapTypeId.ROADMAP
+        	};
+        	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        	getMyLocation();
+        };
+
+         //find my location
+        function getMyLocation() {
+         	if (navigator.geolocation) {
+          		navigator.geolocation.getCurrentPosition(function(position) {
+					myLat = position.coords.latitude;
+					myLong = position.coords.longitude;
+					renderMyMap();
+				});
+          	}
+          	//you're using IE
+          	else {
+          		alert("Geolocation is not supported by your web browser!");
+          	}
+        };
+
+        //renders map with geolocation
+        function renderMyMap() {
+          	latlng = new google.maps.LatLng(myLat, myLong);
+
+          	meMarker = new google.maps.Marker({
+          		position: latlng,
+          		title: "ME"
+          	});
+          	meMarker.setMap(map);
+
+          	// //open info window on click of marker
+          	google.maps.event.addListener(meMarker, 'click', function() {
+          			infowindow.setContent(meMarker.title);
+          			infowindow.open(map, meMarker);
+          	});
+
+          	//pan to geolocation
+          	map.panTo(latlng);
+
+          	//get data from datastore
+          	getData();
+        };
+
+        function getData() {
+        	try {
+        		request.open('POST', url, true);
+				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        		request.send("login=Horace&lat=" + myLat + "&lng=" + myLong);
+       			request.onreadystatechange = function() {
+        			if (request.readyState == 4 && request.status == 200) {
+        				var parsedData = JSON.parse(request.responseText);
+        				for (var i = 0; i < parsedData['students'].length; i++) {
+        					createMarker(parsedData['students'][i]);
+        				}
+        			}
+        		}	
+        	}
+        	catch(failed) {
+        		request = null;
+        	}
+        };
+
+        function createMarker(student) {
+        	var studentLatLng = new google.maps.LatLng(student.lat, student.lng);
+
+        	var marker = new google.maps.Marker({
+        		map: map,
+        		position: studentLatLng
+        	});
+
+        	var contentString = "login:" + student.login + "<br>lat/lng:" + student.lat + ", " + student.lng + "<br>timestamp: " + student.created_at;
+        	google.maps.event.addListener(marker, 'click', function() {
+					infowindow.close();
+					infowindow.setContent(contentString);
+					infowindow.open(map, this);
+        	});
+        };
+ 		</script>
+	</head>
+	<body onload="initialize()">
+		<div id="map_canvas"></div>
+	</body>
+</html>
