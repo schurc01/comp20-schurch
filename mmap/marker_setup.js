@@ -143,14 +143,16 @@ function createCharacterMarker(character) {
 
   //creates polyline between me and character
 	var polyline = new google.maps.Polyline({
-	path: [character_latlng, latlng],
-	geodesic: true,
-	strokeColor: '#377FD3',
-	strokeOpacity: 0.75,
-	strokeWeight: 2,
-	map: map
-});
+	  path: [character_latlng, latlng],
+	  map: map,
+    geodesic: false,
+	  strokeColor: '#377FD3',
+	  strokeOpacity: 0.7,
+	  strokeWeight: 3
+  });
 
+  //fits map bounds to the paths
+  map.fitBounds(character_latlng, latlng);
 // var distanceWindow = new google.maps.InfoWindow();
 // distanceWindow.setContent(distance);
 
