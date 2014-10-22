@@ -8,6 +8,5 @@ body {
 }
 #map_canvas { 
 	height: 100%;
-	z-index: 0;
 	position: absolute;
 }
