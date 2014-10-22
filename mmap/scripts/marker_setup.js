@@ -1,13 +1,16 @@
-var my_lat;
-var my_long;
+var my_lat = 0;
+var my_long = 0;
 var map;
 //my latitude/longitude variable
-var latlng;
+var latlng = new google.maps.LatLng(my_lat, my_long);
+var myOptions = {
+    				zoom: 14, 
+    				center: latlng,
+    				mapTypeId: google.maps.MapTypeId.ROADMAP
+  				};
 var me_marker;
 var post_url = "http://chickenofthesea.herokuapp.com/sendLocation";
-var my_infowindow = new google.maps.InfoWindow({
-	content: "THAT'S ME!"
-});
+var my_infowindow = new google.maps.InfoWindow();
 var infowindow = new google.maps.InfoWindow();
 var request = new XMLHttpRequest();
 var mousepos = new google.maps.LatLng();
@@ -19,11 +22,6 @@ var distance_string = "";
 
 //creates an initial map with no markers
 function initialize() {
-	myOptions = {
-    	zoom: 14, 
-    	center: latlng,
-    	mapTypeId: google.maps.MapTypeId.ROADMAP
-  	};
   	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   	getMyLocation();
 };
@@ -46,17 +44,16 @@ function getMyLocation() {
 //renders map with geolocation marker of my location
 function renderMeOnMap() {
 	latlng = new google.maps.LatLng(my_lat, my_long);
+	//pan to my geolocation
+	map.panTo(latlng);
 	//my kitten marker image
   	var image = "http://placekitten.com/g/40/40";
 
 	me_marker = new google.maps.Marker({
 		position: latlng,
-		icon: image,
-		map: map
+		icon: image
 	});
-
-	//pan to my geolocation
-	map.panTo(latlng);
+	me_marker.setMap(map);
 
 	//request data from datastore
 	getData();
@@ -92,7 +89,7 @@ function getData() {
 
 				sortDistances(0);
 				for (var i = 0; i < names.length; i++) {
-					distance_string += (names[i] + ": " + distances[i] + " <br>");
+					distance_string += (names[i] + ": " + distances[i] + "KM<br>");
 				}
 
 				//set distances on my marker
@@ -154,7 +151,6 @@ function createStudentMarker(student) {
 function createCharacterMarker(character) {
 	var character_latlng = new google.maps.LatLng(character.loc.latitude,
                                                 character.loc.longitude);
-  	console.log(character.name);
   	//finds image for the character
 	var image = "images/" + character.name + ".png";
  	var characterContentString = "name: " + character.name + "<br>lat/lng: " 
@@ -211,7 +207,6 @@ function distanceBetweenMeAndCharacter(character) {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 	distance = earthRadius * c;
-	console.log(distance);
 }
 
 //turns number to radians
