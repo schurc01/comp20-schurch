@@ -1,4 +1,5 @@
 README
+
 	1. I believe I have correctly implemented all parts of this assignment. I successfully 
 	used geolocation to display my location on the map, as well as return the students
 	and characters locations using unique markers and infowindows. The sorted distances
