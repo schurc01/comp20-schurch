@@ -4,13 +4,32 @@
 
 <head>
 	<title>My News Feed</title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
-	  // Most of your work will be done here...
+	$(document).ready(function() {
+		$('#msg').keypress(function(k) {
+		    var keyCode = k.which;
+			if (keyCode == 13) { //enter
+				var date = new Date();
+				var timestamp = date.toLocaleTimeString();
+				var data = "<br>" + timestamp + " - " + $(this).val() + "<br>";
+				localStorage[timestamp] = data;
+				$('#news').prepend(localStorage[timestamp]);
+				console.log(localStorage[timestamp]);
+				$(this).val('');
+			}
+		});
+	});
+
+	function update() {
+		for (key in localStorage) {
+			$('#news').prepend(localStorage[key]);
+		}
+	}
 	</script>
 </head>
 
-<body>
+<body onload="update()">
 	<h1>My News Feed</h1>
 	<h3>My news update: <input type="text" id="msg" name="msg" size="30" /></h3>
 	<div id="news">News...</div>
