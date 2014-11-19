@@ -15,7 +15,6 @@
 				var data = "<br>" + timestamp + " - " + $(this).val() + "<br>";
 				localStorage[timestamp] = data;
 				$('#news').prepend(localStorage[timestamp]);
-				console.log(localStorage[timestamp]);
 				$(this).val('');
 			}
 		});
