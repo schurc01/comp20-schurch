@@ -9,7 +9,7 @@ var myOptions = {
     				mapTypeId: google.maps.MapTypeId.ROADMAP
   				};
 var me_marker;
-var post_url = "http://chickenofthesea.herokuapp.com/sendLocation";
+var post_url = "https://arcane-ridge-5647.herokuapp.com/sendLocation";
 var my_infowindow = new google.maps.InfoWindow();
 var infowindow = new google.maps.InfoWindow();
 var request = new XMLHttpRequest();
@@ -98,7 +98,7 @@ function getData() {
 				my_infowindow.open(map, me_marker);
 				my_infowindow.setContent(distance_string);
 				});
-	    	}
+	    		}
   		}
   	}
   	//if the request fails
