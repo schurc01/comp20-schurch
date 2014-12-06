@@ -27,11 +27,9 @@ mostly attacked the application through use of curls, bash scripts, and JavaScri
 injections.</p>
 <h1>Abstract of Findings</h1>
 <p>The majority of the security issues in this application deal with too
-much trust in client data and outside of its API. Most of these security breaches
-are quite serious: they could lead to crashing the program or even malicious 
-access of other client's data. However, most of them are also quite easy fixes--
-whether that be input validator or a stricter policy on the use and manipulation
-of the application.</p>
+much trust in client data and not enough validation on the input received.
+ Most of these security breaches are quite serious: they could lead to crashing the program or even malicious access of other client's data. However, most of them are
+also quite easy fixes--whether that be input validator or a stricter policy on the use and manipulation of the application.</p>
 <h1>Issues Found</h1>
 <h2>Issue 1: Cross-Site Scripting</h2>
 <img src="XSS.png" alt="XSS example"/>
