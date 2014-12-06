@@ -44,6 +44,11 @@ using the normal parameters for login, I set login to
 <xmp><script>alert('hacked');</script></xmp> I set lat and lng to something random, and executed the command.</xmp> Since the creator of this program did not check the body of the 
 POST, the injection of JavaScript will be accepted and executed.</p>
 <h4>Proof of Vulnerability</h4>
+<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
+of request is stored without any kind of check for XSS.</figcaption></figure>
+<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
+  will be stored in the database uses the objects that were never checked for XSS.</figcaption></figure>
+<p>See above image for proof of alert executed.</p>
 <h4>Resolution</h4>
 <p>This security breach could be resolved by checking the body of the input on POST for "<", ">", "&" and either changing or rejecting that input accordingly.</p>
 <h2>Issue 2: Lack of Limit on Inputs to Database</h2>
@@ -60,6 +65,12 @@ many different ways-- with a bash script that runs the curl command in a loop 10
 did not issue any kind of maximum checkin from one user or location, one person is free
 to spam the database.</p>
 <h4>Proof of Vulnerability</h4>
+<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
+of request is stored without any kind of limit check.</figcaption></figure>
+<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
+  will be stored in the database uses the objects that were never checked for number
+  of times executed.</figcaption></figure>
+<p>See above image for proof of database filling.</p>
 <h4>Resolution</h4>
 <p> This issue could be resolved by checking how many times a login has checked in a
 pre-determined amount of time (by searching through the database with a query), and filtering which checkins are displayed and stored accordingly.
@@ -73,11 +84,13 @@ pre-determined amount of time (by searching through the database with a query), 
 <p>The creator of this program enabled CORS with all locations, using "*", which allows
  anyone with any information about the API to manipulate it in whatever way they please, with it's intended use in mind or a more malicious one.</p>
 <h4>Proof of Vulnerability</h4>
+<figure><img src="bad_cors.png" alt="bad cors"/><figcaption>Bad cors policy</figcaption></figure>
 <h4>Resolution</h4>
 <p>This issue can be resolved by narrowing the CORS policy on this website to the clients that the application was specifically designed for. This can be easily fixed
 by changing a few lines of the server code.</p>
 <h2>Issue 4: Image Injection</h2>
 <img src="Image_inj.png" alt="image injection"/>
+<img src="Issue_4_Proof.png" alt="proof of command"/>
 <h4>Location: /sendLocation POST API</h4>
 <h4>Severity of Issue: Low. While this does not pose any explicit risk to the
 viability of the program, it is an annoyance that interferes with the use of 
@@ -90,6 +103,11 @@ the program.</h4>
   use of the map.
 </p>
 <h4>Proof of Vulnerability</h4>
+<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
+of request is stored without any kind of check for "<" character.</figcaption></figure>
+<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
+  will be stored in the database uses the objects that were never checked for injection.</figcaption></figure>
+<p>See above image for proof of image injection.</p>
 <h4>Resolution</h4>
 <p>This can be fixed by a similar approached to XSS, with checking for the "<" 
 characters and either rejecting the input or changing those characters.</p>
