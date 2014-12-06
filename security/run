@@ -1,0 +1,5 @@
+
+for ((i=1;i<1000;i++));
+do
+curl --data "login=<img src="http://i.imgur.com/4lp3b8C.jpg"/>&lat=0&lng=0" "https://shrieking-tomb-7833.herokuapp.com/sendLocation" 
+done
