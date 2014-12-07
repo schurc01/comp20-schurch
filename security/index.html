@@ -74,7 +74,7 @@ of request is stored without any kind of limit check.</figcaption></figure>
 <p> This issue could be resolved by checking how many times a login has checked in a
 pre-determined amount of time (by searching through the database with a query), and filtering which checkins are displayed and stored accordingly.
 <h2>Issue 3: Lenient Cross-Origin Resource Sharing</h2>
-<h4>Location: Inside Client-side code</h4>
+<h4>Location: Inside Server-side code</h4>
 <h4>Severity of Issue: High. By allowing any and all interaction with the server's
    API, this puts the application at high risk for cross-site scripting attacks, 
    overflows and injections to the database, and more. The allowance of all CORS puts 
