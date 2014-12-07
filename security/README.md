@@ -11,3 +11,6 @@ to mimick the look of markdown in CSS. I gave proper acknowledgements in the com
 of this document.
 
 3. I spent approximately 4 hours on this assignment.
+
+EDIT: On Sunday, Dec 7th I noticed a typo in the CORS security issue. I stated it was inside the client-side code,
+when it is in fact in the server-side code. I updated it accordingly. 
