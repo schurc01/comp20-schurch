@@ -7,6 +7,7 @@ body {
 	padding: 0px;
 }
 #map_canvas { 
-	height: 70%;
-	position: absolute;
+	height: 50%;
+	width: 50%;
+	position: relative;
 }
