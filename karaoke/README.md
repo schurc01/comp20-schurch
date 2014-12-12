@@ -3,3 +3,5 @@ everything correctly, though I could havemade my code more modular by not
 hard coding the currentTimes. However, after struggling with it for a while,
 it seemed to be the most trustworthy way to complete the lab. I worked on
 debugging my code for this lab with Sophie Dasinger.
+
+Product viewable at: http://schurc01.github.io/comp20-schurch/karaoke
