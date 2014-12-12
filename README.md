@@ -1,4 +1,4 @@
-Hello world.
+Hello, world.
 ===========
 
 What is the purpose of this repository?
