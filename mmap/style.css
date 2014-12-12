@@ -8,3 +8,7 @@ html, body, #map_canvas
     float: left;
     width: 65%;
 }
+#border {
+    float: right;
+    width: 35%;
+}
