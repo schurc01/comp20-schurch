@@ -94,7 +94,7 @@ function getData() {
 
 				//set distances on my marker
 				google.maps.event.addListener(me_marker, 'click', function() {
-    			my_infowindow.close();
+    				my_infowindow.close();
 				my_infowindow.open(map, me_marker);
 				my_infowindow.setContent(distance_string);
 				});
