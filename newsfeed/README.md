@@ -1,14 +1,8 @@
 Newsfeed
+---------
 
-By Susannah Church
+This lab assignment was to create a page using JavaScript and localStorage that would
+display status updates added through the form. localStorage would allow
+the user to return to the page and not lose any of their updates for a short period of time.
 
-=======================
-
-I believe I have correctly implemented all aspects of this
-lab. I'm not sure whether you wanted us to delete the "news..."
-text, but your response to someone's question sounded more
-like an option than a requirement, so I kept it there.
-
-I worked alone on this lab.
-
-I spent approximately 1 hr on this lab.
+Product viewable at: http://schurc01.github.io/comp20-schurch/newsfeed
