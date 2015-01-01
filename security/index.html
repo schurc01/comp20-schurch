@@ -1,114 +1,100 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="github.css">
     <meta charset="UTF-8">
     <title>A4 Security Report</title>
 </head>
+
 <body>
-<h1>Security Assessment</h1> 
-<h1>Introduction</h1>
-<p>The focus of this assessment is to gauge the security of a web application
-   developed by Colin Hamilton for Ming Chow's <a href="http://tuftsdev.github.io/WebProgramming/">Web Programming Course</a>. This application was designed as a tool to 
-   track and display the locations of professors, characters, and other
-   students on a map, much like Harry Potter's "Marauder's Map". This application was produced in two phases-- <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html"> one phase </a> focused on the client-side user interface that displayed the map and its current markers, while
-   the <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">second phase</a> was developed to provide the backend server and database
-   infrastructure of the application.</p>
-<p>My purpose here is to assess any 
-   vulnerabilities within this web application,
-   determine their severity, and provide recommendations on how to resolve
-   these issues.</p>
-<h1>Methodology</h1>
-<p>I began my testing by treating the application as a black-box and attacking it
-only through the information I had about its API. After finding multiple 
-vulnerabilities there, I moved my focus to looking at the actual code of the server
-and client-side code, where I found further issues and possible security flaws. I 
-mostly attacked the application through use of curls, bash scripts, and JavaScript 
-injections.</p>
-<h1>Abstract of Findings</h1>
-<p>The majority of the security issues in this application deal with too
-much trust in client data and not enough validation on the input received.
- Most of these security breaches are quite serious: they could lead to crashing the program or even malicious access of other client's data. However, most of them are
-also quite easy fixes--whether that be input validator or a stricter policy on the use and manipulation of the application.</p>
-<h1>Issues Found</h1>
-<h2>Issue 1: Cross-Site Scripting</h2>
-<img src="XSS.png" alt="XSS example"/>
-<h4>Location: POST /sendLocation API</h4>
-<h4>Severity of Issue: High. With this kind of ability, a hacker could redirect 
+    <h1>Security Assessment</h1>
+    <h1>Introduction</h1>
+    <p>The focus of this assessment is to gauge the security of a web application developed by Colin Hamilton for Ming Chow's <a href="http://tuftsdev.github.io/WebProgramming/">Web Programming Course</a>. This application was designed as a tool to track and display the locations of professors, characters, and other students on a map, much like Harry Potter's "Marauder's Map". This application was produced in two phases-- <a href="http://tuftsdev.github.io/WebProgramming/assignments/a2.html"> one phase </a> focused on the client-side user interface that displayed the map and its current markers, while the <a href="http://tuftsdev.github.io/WebProgramming/assignments/a3.html">second phase</a> was developed to provide the backend server and database infrastructure of the application.</p>
+    <p>My purpose here is to assess any vulnerabilities within this web application, determine their severity, and provide recommendations on how to resolve these issues.</p>
+    <h1>Methodology</h1>
+    <p>I began my testing by treating the application as a black-box and attacking it only through the information I had about its API. After finding multiple vulnerabilities there, I moved my focus to looking at the actual code of the server and client-side code, where I found further issues and possible security flaws. I mostly attacked the application through use of curls, bash scripts, and JavaScript injections.
+    </p>
+    <h1>Abstract of Findings</h1>
+    <p>The majority of the security issues in this application deal with too much trust in client data and not enough validation on the input received. Most of these security breaches are quite serious: they could lead to crashing the program or even malicious access of other client's data. However, most of them are also quite easy fixes--whether that be input validator or a stricter policy on the use and manipulation of the application.</p>
+    <h1>Issues Found</h1>
+    <h2>Issue 1: Cross-Site Scripting</h2>
+    <img src="images/XSS.png" alt="XSS example" />
+    <h4>Location: POST /sendLocation API</h4>
+    <h4>Severity of Issue: High. With this kind of ability, a hacker could redirect 
     the page, create a infinite loop of alerts, or inject code to manipulate the
     mongo database, all completely destroying the usability of the application.</h4>
-<h4>Description of Issue</h4>
-<p>I began this attack by curling to the ']/sendLocation POST API, but instead of
-using the normal parameters for login, I set login to 
-<xmp><script>alert('hacked');</script></xmp> I set lat and lng to something random, and executed the command.</xmp> Since the creator of this program did not check the body of the 
-POST, the injection of JavaScript will be accepted and executed.</p>
-<h4>Proof of Vulnerability</h4>
-<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
-of request is stored without any kind of check for XSS.</figcaption></figure>
-<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
-  will be stored in the database uses the objects that were never checked for XSS.</figcaption></figure>
-<p>See above image for proof of alert executed.</p>
-<h4>Resolution</h4>
-<p>This security breach could be resolved by checking the body of the input on POST for "<", ">", "&" and either changing or rejecting that input accordingly.</p>
-<h2>Issue 2: Lack of Limit on Inputs to Database</h2>
-<img src="Database_overflow.png" alt="database overflow"/>
-<h4>Location: POST /sendLocation API</h4>
-<h4>Severity of Issue: Medium. While this will not create a threat to any 
+    <h4>Description of Issue</h4>
+    <p>I began this attack by curling to the ']/sendLocation POST API, but instead of using the normal parameters for login, I set login to
+        <xmp>
+            <script>
+            alert('hacked');
+            </script>
+        </xmp> I set lat and lng to something random, and executed the command.</xmp> Since the creator of this program did not check the body of the POST, the injection of JavaScript will be accepted and executed.</p>
+    <h4>Proof of Vulnerability</h4>
+    <figure><img src="images/no_check.png" alt="proof of no checking" />
+        <figcaption>Code where body of request is stored without any kind of check for XSS.</figcaption>
+    </figure>
+    <figure><img src="images/no_check_pt_2.png" alt="storing of data" />
+        <figcaption>JSON object that will be stored in the database uses the objects that were never checked for XSS.</figcaption>
+    </figure>
+    <p>See above image for proof of alert executed.</p>
+    <h4>Resolution</h4>
+    <p>This security breach could be resolved by checking the body of the input on POST for "
+        < ", ">", "&" and either changing or rejecting that input accordingly.</p>
+    <h2>Issue 2: Lack of Limit on Inputs to Database</h2>
+    <img src="images/Database_overflow.png" alt="database overflow" />
+    <h4>Location: POST /sendLocation API</h4>
+    <h4>Severity of Issue: Medium. While this will not create a threat to any 
 other client's data or technically render the application useless, this kind of 
 spamming will significantly reduce the application's ability to perform well
 by interfering with one of it's purposes: returning the last 100 check-ins. No
 one really wants to see 100 check-ins of spam.</h4>
-<h4>Description of Issue</h4>
-<p>I curled the login "HACKED" with a 0 lat and long to the database until the checkins page had been filled. I could see this issue being performed in
-many different ways-- with a bash script that runs the curl command in a loop 100 times, using a small JQuery program to POST in a loop, and more. Because the creator
-did not issue any kind of maximum checkin from one user or location, one person is free
-to spam the database.</p>
-<h4>Proof of Vulnerability</h4>
-<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
-of request is stored without any kind of limit check.</figcaption></figure>
-<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
-  will be stored in the database uses the objects that were never checked for number
-  of times executed.</figcaption></figure>
-<p>See above image for proof of database filling.</p>
-<h4>Resolution</h4>
-<p> This issue could be resolved by checking how many times a login has checked in a
-pre-determined amount of time (by searching through the database with a query), and filtering which checkins are displayed and stored accordingly.
-<h2>Issue 3: Lenient Cross-Origin Resource Sharing</h2>
-<h4>Location: Inside Server-side code</h4>
-<h4>Severity of Issue: High. By allowing any and all interaction with the server's
+    <h4>Description of Issue</h4>
+    <p>I curled the login "HACKED" with a 0 lat and long to the database until the checkins page had been filled. I could see this issue being performed in many different ways-- with a bash script that runs the curl command in a loop 100 times, using a small JQuery program to POST in a loop, and more. Because the creator did not issue any kind of maximum checkin from one user or location, one person is free to spam the database.</p>
+    <h4>Proof of Vulnerability</h4>
+    <figure><img src="images/no_check.png" alt="proof of no checking" />
+        <figcaption>Code where body of request is stored without any kind of limit check.</figcaption>
+    </figure>
+    <figure><img src="images/no_check_pt_2.png" alt="storing of data" />
+        <figcaption>JSON object that will be stored in the database uses the objects that were never checked for number of times executed.</figcaption>
+    </figure>
+    <p>See above image for proof of database filling.</p>
+    <h4>Resolution</h4>
+    <p> This issue could be resolved by checking how many times a login has checked in a pre-determined amount of time (by searching through the database with a query), and filtering which checkins are displayed and stored accordingly.
+        <h2>Issue 3: Lenient Cross-Origin Resource Sharing</h2>
+        <h4>Location: Inside Server-side code</h4>
+        <h4>Severity of Issue: High. By allowing any and all interaction with the server's
    API, this puts the application at high risk for cross-site scripting attacks, 
    overflows and injections to the database, and more. The allowance of all CORS puts 
    the application in a much vulnerable place. </h4>
-<h4>Description of Issue</h4>
-<p>The creator of this program enabled CORS with all locations, using "*", which allows
- anyone with any information about the API to manipulate it in whatever way they please, with it's intended use in mind or a more malicious one.</p>
-<h4>Proof of Vulnerability</h4>
-<figure><img src="bad_cors.png" alt="bad cors"/><figcaption>Bad cors policy</figcaption></figure>
-<h4>Resolution</h4>
-<p>This issue can be resolved by narrowing the CORS policy on this website to the clients that the application was specifically designed for. This can be easily fixed
-by changing a few lines of the server code.</p>
-<h2>Issue 4: Image Injection</h2>
-<img src="Image_inj.png" alt="image injection"/>
-<img src="Issue_4_Proof.png" alt="proof of command"/>
-<h4>Location: /sendLocation POST API</h4>
-<h4>Severity of Issue: Low. While this does not pose any explicit risk to the
+        <h4>Description of Issue</h4>
+        <p>The creator of this program enabled CORS with all locations, using "*", which allows anyone with any information about the API to manipulate it in whatever way they please, with it's intended use in mind or a more malicious one.</p>
+        <h4>Proof of Vulnerability</h4>
+        <figure><img src="images/bad_cors.png" alt="bad cors" />
+            <figcaption>Bad cors policy</figcaption>
+        </figure>
+        <h4>Resolution</h4>
+        <p>This issue can be resolved by narrowing the CORS policy on this website to the clients that the application was specifically designed for. This can be easily fixed by changing a few lines of the server code.</p>
+        <h2>Issue 4: Image Injection</h2>
+        <img src="images/Image_inj.png" alt="image injection" />
+        <img src="images/Issue_4_Proof.png" alt="proof of command" />
+        <h4>Location: /sendLocation POST API</h4>
+        <h4>Severity of Issue: Low. While this does not pose any explicit risk to the
 viability of the program, it is an annoyance that interferes with the use of 
 the program.</h4>
-<h4>Description of Issue</h4>
-<p>I curled the POST API and injected an image tag with a high-resolution photo
-  of a cat as the login of my POST. As a result, on the client-side interface,
-  the picture is rendered where the login should be. Because the picture is
-  very large, it takes up a lot of space on the page and interferes with the 
-  use of the map.
-</p>
-<h4>Proof of Vulnerability</h4>
-<figure><img src="no_check.png" alt="proof of no checking"/><figcaption>Code where body
-of request is stored without any kind of check for "<" character.</figcaption></figure>
-<figure><img src="no_check_pt_2.png" alt="storing of data"/><figcaption>JSON object that
+        <h4>Description of Issue</h4>
+        <p>I curled the POST API and injected an image tag with a high-resolution photo of a cat as the login of my POST. As a result, on the client-side interface, the picture is rendered where the login should be. Because the picture is very large, it takes up a lot of space on the page and interferes with the use of the map.
+        </p>
+        <h4>Proof of Vulnerability</h4>
+        <figure><img src="images/no_check.png" alt="proof of no checking" />
+            <figcaption>Code where body of request is stored without any kind of check for "
+                < " character.</figcaption></figure>
+<figure><img src="images/no_check_pt_2.png " alt="storing of data "/><figcaption>JSON object that
   will be stored in the database uses the objects that were never checked for injection.</figcaption></figure>
 <p>See above image for proof of image injection.</p>
 <h4>Resolution</h4>
-<p>This can be fixed by a similar approached to XSS, with checking for the "<" 
+<p>This can be fixed by a similar approached to XSS, with checking for the "< " 
 characters and either rejecting the input or changing those characters.</p>
 <h1>Conclusion</h1>
 <p>Right now, this program has vulnerabilites that could quite easily been its 
