@@ -1,8 +1,8 @@
-I believe that all aspects of this lab have been correctly implemented.
-I made sure to correctly implement the min and max widths, and show the
-corresponding images.
+Responsive Lab
+----------------
 
-I collaborated with Sophie Dasinger by generally talking about the
-premise of this lab. 
+This was a simple lab where we used sprites and CSS to create a responsive 
+webpage.
 
-I spend approximately 20 minutes on this lab. 
+Product viewable at: http://schurc01.github.io/comp20-schurch/responsive
+(Play with your browser window's size to see the results!)
