@@ -1,3 +1,6 @@
+Karaoke Lab
+-------------
+
 This lab assignment was our first using JavaScript. We were tasked with creating a karaoke-style experience for the music video for "Daydream Believer" by the Monkees. As the song played, the current lyrics had to be displayed.
 
 I spent approximately two hours on this assignment. I believe I implemented
