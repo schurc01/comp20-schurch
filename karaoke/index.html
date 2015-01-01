@@ -1,69 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<title>Daydream Believer</title>
-<link rel="stylesheet" href="style.css" type="text/css" />
+    <meta charset="utf-8" />
+    <title>Daydream Believer</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
+    <div id="video">
+       <h1 id="title">Daydream Believer</h1>
+       <video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" align="center" controls></video>
+    </div>
+    <div id="lyrics"></div>
 
-<h1 id="title">Daydream Believer</h1>
-
-<video src="http://www.cs.tufts.edu/comp/20/daydream_believer.webm" id="music_video" align="center" controls></video>
-<div id="lyrics"></div>
-
-<script>
-var song_lyrics = { "words" : [ {"lyric" : "Oh, I could hide 'neath the wings \
+    <script>
+    var song_lyrics = {
+        "words": [{
+            "lyric": "Oh, I could hide 'neath the wings \
                                  of the bluebird as she sings. \
                                  The six o'clock alarm would never ring. \
                                  But it rings and I rise, \
                                  Wipe the sleep out of my eyes. \
-                                 My shavin' razor's cold and it stings."},
-                                 {"lyric": "Cheer up, Sleepy Jean. \
+                                 My shavin' razor's cold and it stings."
+        }, {
+            "lyric": "Cheer up, Sleepy Jean. \
                                  Oh, what can it mean. \
                                  To a daydream believer \
-                                 And a homecoming queen."},
-                                 {"lyric": "You once thought of me \
+                                 And a homecoming queen."
+        }, {
+            "lyric": "You once thought of me \
                                  As a white knight on a steed. \
                                  Now you know how happy I can be. \
                                  Oh, and our good times start and end \
                                  Without dollar one to spend. \
-                                 But how much, baby, do we really need."},
-                                 {"lyric": "Cheer up, Sleepy Jean. \
+                                 But how much, baby, do we really need."
+        }, {
+            "lyric": "Cheer up, Sleepy Jean. \
                                  Oh, what can it mean. \
                                  To a daydream believer \
                                  And a homecoming queen. \
                                  Cheer up, Sleepy Jean. \
                                  Oh, what can it mean. \
                                  To a daydream believer \
-                                 And a homecoming queen."},
-                                 {"lyric": "Cheer up, Sleepy Jean. \
+                                 And a homecoming queen."
+        }, {
+            "lyric": "Cheer up, Sleepy Jean. \
                                  Oh, what can it mean. \
                                  To a daydream believer \
-                                 And a homecoming queen."}
-                            ]}
-	function showLyrics() {
-		var lyrics = document.getElementById("lyrics");
-      if (video.currentTime < 34)
-         lyrics.innerHTML = song_lyrics.words[0].lyric;
-      if (video.currentTime > 38 && video.currentTime < 53)
-         lyrics.innerHTML = song_lyrics.words[1].lyric;x
-      if (video.currentTime > 53 && video.currentTime < 83)
-         lyrics.innerHTML = song_lyrics.words[2].lyric;
-      if (video.currentTime > 84 && video.currentTime < 120)
-         lyrics.innerHTML = song_lyrics.words[3].lyric;
-      if (video.currentTime > 121 && video.currentTime < 123)
-         lyrics.innerHTML = '<img src="sleeping.jpg" alt="sleeping"/>';
-      if (video.currentTime > 124 && video.currentTime < 126)
-         lyrics.innerHTML = '<img src="jeans.jpg" alt="jeans"/>';
-      if (video.currentTime > 127)
-         lyrics.innerHTML = song_lyrics.words[4].lyric;
+                                 And a homecoming queen."
+        }]
+    }
 
-	}
-	var video = document.getElementById("music_video");
+    function showLyrics() {
+        var lyrics = document.getElementById("lyrics");
+        if (video.currentTime < 34)
+            lyrics.innerHTML = song_lyrics.words[0].lyric;
+        if (video.currentTime > 38 && video.currentTime < 53)
+            lyrics.innerHTML = song_lyrics.words[1].lyric;
+        if (video.currentTime > 53 && video.currentTime < 83)
+            lyrics.innerHTML = song_lyrics.words[2].lyric;
+        if (video.currentTime > 84 && video.currentTime < 120)
+            lyrics.innerHTML = song_lyrics.words[3].lyric;
+        if (video.currentTime > 121 && video.currentTime < 123)
+            lyrics.innerHTML = '<img src="sleeping.jpg" alt="sleeping"/>';
+        if (video.currentTime > 124 && video.currentTime < 126)
+            lyrics.innerHTML = '<img src="jeans.jpg" alt="jeans"/>';
+        if (video.currentTime > 127)
+            lyrics.innerHTML = song_lyrics.words[4].lyric;
 
-	video.addEventListener("timeupdate", showLyrics, true);
-</script>
+    }
+    var video = document.getElementById("music_video");
+
+    video.addEventListener("timeupdate", showLyrics, true);
+    </script>
 </body>
-</html>	
+
+</html>
